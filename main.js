@@ -11,9 +11,21 @@ window.addEventListener('load', () => {
     tl.to('.animate-in', {
         opacity: 1,
         y: 0,
-        duration: 0.8,
-        stagger: 0.2,
-        ease: 'power3.out'
+        duration: 1.2,
+        stagger: 0.15,
+        ease: 'expo.out'
+    });
+
+    // Hero Parallax
+    gsap.to('.hero-image', {
+        scrollTrigger: {
+            trigger: '.hero',
+            start: 'top top',
+            end: 'bottom top',
+            scrub: true
+        },
+        y: 100,
+        ease: 'none'
     });
 
     // Scroll Reveal Animations
@@ -22,23 +34,26 @@ window.addEventListener('load', () => {
         gsap.to(el, {
             scrollTrigger: {
                 trigger: el,
-                start: 'top 85%',
+                start: 'top 90%',
                 toggleActions: 'play none none none'
             },
             opacity: 1,
             y: 0,
-            duration: 0.8,
-            ease: 'power2.out'
+            duration: 1,
+            ease: 'expo.out'
         });
     });
 
-    // Pulse animation for badges
-    gsap.to('.badge', {
-        scale: 1.05,
-        duration: 2,
-        repeat: -1,
-        yoyo: true,
-        ease: 'sine.inOut'
+    // Card Glow Tracking
+    const cards = document.querySelectorAll('.feature-card, .lead-card');
+    cards.forEach(card => {
+        card.addEventListener('mousemove', e => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            card.style.setProperty('--mouse-x', `${x}px`);
+            card.style.setProperty('--mouse-y', `${y}px`);
+        });
     });
 });
 
