@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mission Confirmed | JAX: The Sentinel</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/gsap@3.12.5/all.min.js"></script>
+    <style>
+        .thank-you-hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .mission-log {
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid var(--accent-color);
+            padding: 3rem;
+            border-radius: 8px;
+            max-width: 600px;
+            width: 90%;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 0 50px rgba(0, 240, 255, 0.2);
+        }
+        .voice-wave {
+            display: flex;
+            justify-content: center;
+            gap: 4px;
+            margin: 2rem 0;
+            height: 40px;
+            align-items: center;
+        }
+        .wave-bar {
+            width: 4px;
+            background: var(--accent-color);
+            border-radius: 2px;
+            height: 10px;
+        }
+        .pulse { animation: wave 1.5s infinite; }
+        @keyframes wave {
+            0%, 100% { height: 10px; }
+            50% { height: 40px; }
+        }
+        .jax-msg {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--accent-color);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body class="cipher-mode">
+    <div class="noise-overlay"></div>
+    <div class="scanline"></div>
+
+    <main class="thank-you-hero">
+        <div class="container mission-log animate-in">
+            <div class="pill">MISSION INITIALIZED</div>
+            <h1 class="hero-title"><span class="accent">HERO</span> PROTOCOL ACTIVE.</h1>
+            
+            <div class="voice-wave" id="voice-wave">
+                <div class="wave-bar pulse" style="animation-delay: 0s"></div>
+                <div class="wave-bar pulse" style="animation-delay: 0.1s"></div>
+                <div class="wave-bar pulse" style="animation-delay: 0.2s"></div>
+                <div class="wave-bar pulse" style="animation-delay: 0.3s"></div>
+                <div class="wave-bar pulse" style="animation-delay: 0.4s"></div>
+                <div class="wave-bar pulse" style="animation-delay: 0.5s"></div>
+                <div class="wave-bar pulse" style="animation-delay: 0.6s"></div>
+            </div>
+
+            <p class="jax-msg" id="jax-message">
+                "Initializing mission parameters for <span id="user-name">...</span>. My hunters are already scanning for your ghosts. High-conversion audit results incoming."
+            </p>
+
+            <a href="index.html" class="btn btn-outline">RETURN TO COMMAND</a>
+        </div>
+    </main>
+
+    <script>
+        lucide.createIcons();
+        gsap.to('.animate-in', { opacity: 1, y: 0, duration: 1, ease: 'power3.out' });
+
+        // Update name from URL params
+        const urlParams = new URLSearchParams(window.location.search);
+        const name = urlParams.get('name') || 'the mission';
+        document.getElementById('user-name').innerText = name;
+
+        // Auto-speak simulation (Visual only, simulate voice with wave)
+        setTimeout(() => {
+            // Optional: browser speech synthesis
+            try {
+                const msg = new SpeechSynthesisUtterance(`Hero Protocol active. Initializing mission parameters for ${name}. My hunters are already scanning for your ghosts. High-conversion audit results is incoming.`);
+                msg.pitch = 0.5; // Deeper voice but still robotic
+                msg.rate = 1.1; // Faster
+                window.speechSynthesis.speak(msg);
+            } catch (e) {
+                console.log('Speech failed or not supported');
+            }
+        }, 800);
+    </script>
+</body>
+</html>
